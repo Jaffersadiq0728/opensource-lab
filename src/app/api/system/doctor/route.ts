@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { runSystemDoctor } = require("@/lib/installer/doctor");
+import { runSystemDoctor } from "@/lib/installer/doctor";
 
 export async function GET() {
   const checks = runSystemDoctor();

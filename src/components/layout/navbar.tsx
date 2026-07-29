@@ -39,16 +39,16 @@ export function Navbar() {
 
       {/* Right Stats & User Menu */}
       <div className="flex items-center gap-5">
-        {/* Streak Counter */}
+        {/* Dynamic Streak Counter */}
         <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-mono">
           <Flame className="w-4 h-4 fill-amber-400" />
-          <span>7 Day Streak</span>
+          <span>{user?.streakDays || 0} Day Streak</span>
         </div>
 
-        {/* XP Badge */}
+        {/* Dynamic XP Badge */}
         <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-cyber-cyan/10 border border-cyber-cyan/30 text-cyber-cyan text-xs font-mono">
           <Zap className="w-4 h-4" />
-          <span>1,450 XP</span>
+          <span>{user?.xp ? user.xp.toLocaleString() : 0} XP</span>
         </div>
 
         {/* Doctor Status Indicator */}
@@ -89,10 +89,10 @@ export function Navbar() {
               Log In
             </Link>
             <Link
-              href="/register"
+              href="/setup"
               className="px-3 py-1.5 text-xs bg-cyber-cyan text-slate-950 font-semibold rounded-lg hover:shadow-neon-cyan transition-all"
             >
-              Register
+              Setup Admin
             </Link>
           </div>
         )}

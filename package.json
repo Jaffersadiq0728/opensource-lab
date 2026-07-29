@@ -3,16 +3,17 @@
   "version": "1.0.0",
   "private": true,
   "bin": {
-    "tyrotech": "./cli/tyrotech.js"
+    "tyrotech": "./cli/tyrotech.ts"
   },
   "scripts": {
     "dev": "next dev",
+    "start": "npx prisma db push && next start",
     "build": "prisma generate && next build",
-    "start": "next start",
     "lint": "next lint",
     "db:generate": "prisma generate",
     "db:push": "prisma db push",
-    "cli": "node cli/tyrotech.js"
+    "db:seed": "npx tsx src/lib/db/seed.ts",
+    "cli": "npx tsx cli/tyrotech.ts"
   },
   "dependencies": {
     "@prisma/client": "^6.2.1",
@@ -38,6 +39,7 @@
     "postcss": "^8.5.1",
     "prisma": "^6.2.1",
     "tailwindcss": "^3.4.17",
+    "tsx": "^4.19.2",
     "typescript": "^5.7.3"
   }
 }

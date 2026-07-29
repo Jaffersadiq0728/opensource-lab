@@ -40,7 +40,7 @@ export default function DashboardPage() {
             <span>OPERATOR CONTROL MATRIX</span>
           </div>
           <h1 className="text-3xl font-extrabold text-white tracking-wide">
-            Welcome Back, <span className="glow-text-cyan">{user?.username || "Cyber Operator"}</span>
+            Welcome Back, <span className="glow-text-cyan">{user?.username || "Operator"}</span>
           </h1>
           <p className="text-xs text-cyber-muted max-w-xl">
             Self-hosted offline environment active. Complete labs, earn XP, run Docker & VM topologies, and consult your offline AI mentor.
@@ -58,16 +58,16 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      {/* Stats Widget Row */}
+      {/* Dynamic Stats Widget Row */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-5">
         <div className="glass-panel p-5 rounded-xl border border-cyber-border">
           <div className="flex items-center justify-between mb-3">
             <span className="text-xs text-cyber-muted font-mono uppercase">Level & Rank</span>
             <Zap className="w-5 h-5 text-cyber-cyan" />
           </div>
-          <p className="text-2xl font-bold text-white">Level 4 Operator</p>
-          <div className="w-full bg-slate-800 h-1.5 rounded-full mt-3 overflow-hidden">
-            <div className="bg-cyber-cyan h-full w-3/4"></div>
+          <p className="text-2xl font-bold text-white">Level {user?.level || 1} {user?.role === "ADMIN" ? "Administrator" : "Operator"}</p>
+          <div className="w-full bg-slate-900 h-1.5 rounded-full mt-3 overflow-hidden">
+            <div className="bg-cyber-cyan h-full" style={{ width: `${Math.min(100, ((user?.xp || 0) % 1000) / 10)}%` }}></div>
           </div>
         </div>
 
@@ -76,8 +76,8 @@ export default function DashboardPage() {
             <span className="text-xs text-cyber-muted font-mono uppercase">Total XP</span>
             <TrendingUp className="w-5 h-5 text-cyber-emerald" />
           </div>
-          <p className="text-2xl font-bold text-white">1,450 XP</p>
-          <p className="text-[11px] text-cyber-emerald mt-1 font-mono">+150 XP gained today</p>
+          <p className="text-2xl font-bold text-white">{user?.xp ? user.xp.toLocaleString() : 0} XP</p>
+          <p className="text-[11px] text-cyber-emerald mt-1 font-mono">Live progress tracker</p>
         </div>
 
         <div className="glass-panel p-5 rounded-xl border border-cyber-border">
@@ -85,8 +85,10 @@ export default function DashboardPage() {
             <span className="text-xs text-cyber-muted font-mono uppercase">Daily Streak</span>
             <Flame className="w-5 h-5 text-amber-400 fill-amber-400" />
           </div>
-          <p className="text-2xl font-bold text-white">7 Days Active</p>
-          <p className="text-[11px] text-amber-400 mt-1 font-mono">Streak multiplier: 1.2x</p>
+          <p className="text-2xl font-bold text-white">{user?.streakDays || 0} Days Active</p>
+          <p className="text-[11px] text-amber-400 mt-1 font-mono">
+            {user?.streakDays ? `Streak active: ${user.streakDays}d` : "Start daily lab activity"}
+          </p>
         </div>
 
         <div className="glass-panel p-5 rounded-xl border border-cyber-border">
@@ -94,7 +96,7 @@ export default function DashboardPage() {
             <span className="text-xs text-cyber-muted font-mono uppercase">Completed Labs</span>
             <CheckCircle2 className="w-5 h-5 text-cyber-purple" />
           </div>
-          <p className="text-2xl font-bold text-white">12 Labs Passed</p>
+          <p className="text-2xl font-bold text-white">{user?.completedLabsCount || 0} Labs Passed</p>
           <p className="text-[11px] text-cyber-purple mt-1 font-mono">0 Flags pending</p>
         </div>
       </div>

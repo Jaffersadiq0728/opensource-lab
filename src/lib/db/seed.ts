@@ -1,42 +1,11 @@
 import { prisma } from "./index";
-import { hashPassword } from "../auth/argon2";
 
 async function main() {
-  console.log("Seeding TyroTech database...");
-
-  // Seed Admin & Student Users
-  const adminPass = await hashPassword("admin123");
-  const studentPass = await hashPassword("student123");
-
-  const admin = await prisma.user.upsert({
-    where: { email: "admin@tyrotech.local" },
-    update: {},
-    create: {
-      email: "admin@tyrotech.local",
-      username: "admin",
-      passwordHash: adminPass,
-      role: "ADMIN",
-      xp: 5000,
-      level: 10,
-    },
-  });
-
-  const student = await prisma.user.upsert({
-    where: { email: "student@tyrotech.local" },
-    update: {},
-    create: {
-      email: "student@tyrotech.local",
-      username: "student",
-      passwordHash: studentPass,
-      role: "STUDENT",
-      xp: 1450,
-      level: 4,
-      streakDays: 7,
-    },
-  });
+  console.log("Seeding TyroTech System Metadata & Learning Curriculums...");
+  console.log("(Zero user accounts are created during seed. System starts in fresh OS state.)");
 
   // Seed Learning Path: Web Security & Pentesting
-  const webPath = await prisma.learningPath.upsert({
+  await prisma.learningPath.upsert({
     where: { slug: "web-security-pentesting" },
     update: {},
     create: {
@@ -110,7 +79,7 @@ const user = await prisma.user.findFirst({
     },
   });
 
-  console.log("Seeding complete! Admin user: admin@tyrotech.local / admin123");
+  console.log("System metadata seeded successfully! 0 user accounts present.");
 }
 
 main()

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Shield, Lock, User as UserIcon, ArrowRight, AlertCircle } from "lucide-react";
@@ -11,6 +11,18 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+
+  // Auto-detect whether system requires initial setup
+  useEffect(() => {
+    fetch("/api/system/setup")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.setupRequired) {
+          router.push("/setup");
+        }
+      })
+      .catch(() => {});
+  }, [router]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -41,7 +53,7 @@ export default function LoginPage() {
             <Shield className="w-8 h-8" />
           </div>
           <h2 className="text-2xl font-bold text-white tracking-wider">TYROTECH AUTH</h2>
-          <p className="text-xs text-cyber-muted font-mono">Sign in to access your offline cybersecurity workbench</p>
+          <p className="text-xs text-cyber-muted font-mono">Sign in to access your self-hosted cybersecurity workbench</p>
         </div>
 
         {error && (
@@ -61,7 +73,7 @@ export default function LoginPage() {
                 required
                 value={emailOrUsername}
                 onChange={(e) => setEmailOrUsername(e.target.value)}
-                placeholder="admin or student@tyrotech.local"
+                placeholder="Username or email"
                 className="w-full bg-slate-900 text-sm text-white pl-9 pr-4 py-2.5 rounded-lg border border-cyber-border focus:outline-none focus:border-cyber-cyan focus:ring-1 focus:ring-cyber-cyan font-mono"
               />
             </div>
@@ -91,13 +103,6 @@ export default function LoginPage() {
             <ArrowRight className="w-4 h-4" />
           </button>
         </form>
-
-        <div className="mt-6 text-center text-xs text-cyber-muted">
-          Don't have an account?{" "}
-          <Link href="/register" className="text-cyber-cyan hover:underline font-mono">
-            Register Student Profile
-          </Link>
-        </div>
       </div>
     </div>
   );

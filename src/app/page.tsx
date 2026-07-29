@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Shield, Terminal, Cpu, Network, Bot, Lock, Server, ArrowRight, Zap, CheckCircle2 } from "lucide-react";
+import { Shield, Terminal, Cpu, Network, Bot, Lock, Server, ArrowRight, Zap, CheckCircle2, Package } from "lucide-react";
 
 export default function HomePage() {
   return (
