@@ -12,7 +12,8 @@ model User {
   email         String    @unique
   username      String    @unique
   passwordHash  String
-  role          String    @default("STUDENT") // STUDENT, INSTRUCTOR, ADMIN
+  role          Role      @default(STUDENT)
+  status        AccountStatus @default(ACTIVE)
   xp            Int       @default(0)
   level         Int       @default(1)
   streakDays    Int       @default(0)
@@ -193,6 +194,36 @@ model AuditLog {
   createdAt DateTime @default(now())
 
   user User? @relation(fields: [userId], references: [id], onDelete: SetNull)
+}
+
+enum Role {
+  ADMIN
+  INSTRUCTOR
+  STUDENT
+}
+
+enum AccountStatus {
+  ACTIVE
+  SUSPENDED
+  DELETED
+}
+
+enum RefreshTokenStatus {
+  ACTIVE
+  REVOKED
+  EXPIRED
+}
+
+model RefreshToken {
+  id           String   @id @default(uuid())
+  userId       String
+  tokenHash    String   @unique
+  expiresAt    DateTime
+  createdAt    DateTime @default(now())
+  revokedAt    DateTime?
+  status       RefreshTokenStatus @default(ACTIVE)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model ForumPost {
