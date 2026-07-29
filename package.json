@@ -7,7 +7,7 @@
   },
   "scripts": {
     "dev": "next dev",
-    "start": "npx prisma db push && next start",
+    "start": "next start",px prisma db push && next start",
     "build": "prisma generate && next build",
     "lint": "next lint",
     "db:generate": "prisma generate",
@@ -20,6 +20,7 @@
     "argon2": "^0.41.1",
     "clsx": "^2.1.1",
     "commander": "^13.0.0",
+    "cookie": "^0.6.0",
     "flexsearch": "^0.7.43",
     "framer-motion": "^12.0.0",
     "jsonwebtoken": "^9.0.2",
@@ -27,7 +28,8 @@
     "next": "15.1.5",
     "react": "19.0.0",
     "react-dom": "19.0.0",
-    "tailwind-merge": "^2.6.0"
+    "tailwind-merge": "^2.6.0",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@types/flexsearch": "^0.7.6",
